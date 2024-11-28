@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload JSON Files</title>
+</head>
+<body>
+    <h1>Upload Two JSON Files</h1>
+    <form action="/uploadfiles/" method="post" enctype="multipart/form-data">
+        <label for="file1">Test File (JSON):</label>
+        <input name="file1" type="file" required><br><br>
+
+        <label for="file2">Production File (JSON):</label>
+        <input name="file2" type="file" required><br><br>
+
+        <input type="submit" value="Upload">
+    </form>
+</body>
+</html>
