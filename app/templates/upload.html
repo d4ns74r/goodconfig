@@ -1,18 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Upload JSON Files</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Загрузка файлов</title>
 </head>
 <body>
-    <h1>Upload Two JSON Files</h1>
+    <h2>Загрузите два JSON файла для объединения</h2>
+
+    <!-- Форма для загрузки файлов -->
     <form action="/uploadfiles/" method="post" enctype="multipart/form-data">
-        <label for="file1">Test File (JSON):</label>
-        <input name="file1" type="file" required><br><br>
+        <label for="file1">Выберите первый файл JSON:</label>
+        <input type="file" name="file1" id="file1" required><br><br>
 
-        <label for="file2">Production File (JSON):</label>
-        <input name="file2" type="file" required><br><br>
+        <label for="file2">Выберите второй файл JSON:</label>
+        <input type="file" name="file2" id="file2" required><br><br>
 
-        <input type="submit" value="Upload">
+        <button type="submit">Загрузить файлы</button>
     </form>
+
+    <!-- Место для отображения результата -->
+    <h3>Результат:</h3>
+    <pre id="result"></pre>
+
+    <script>
+        // Обработка отправки формы
+        document.querySelector('form').onsubmit = async function(event) {
+            event.preventDefault();
+
+            let formData = new FormData(this);
+            try {
+                // Отправляем запрос на сервер
+                let response = await fetch("/uploadfiles/", {
+                    method: "POST",
+                    body: formData
+                });
+
+                // Получаем ответ от сервера
+                let result = await response.json();
+
+                // Отображаем результат на странице
+                if (response.ok) {
+                    document.getElementById("result").textContent = JSON.stringify(result, null, 2);
+                } else {
+                    document.getElementById("result").textContent = `Ошибка: ${result.message}`;
+                }
+            } catch (error) {
+                document.getElementById("result").textContent = `Ошибка: ${error.message}`;
+            }
+        };
+    </script>
 </body>
 </html>
